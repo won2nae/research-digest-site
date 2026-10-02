@@ -22,7 +22,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","No
 .gate p{color:var(--ink-muted);font-size:14px;margin:0 0 16px}
 .gate input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--ink);font-size:15px;margin-bottom:12px}
 .gate button{width:100%;padding:10px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:15px;font-weight:600;cursor:pointer}
-.gate-error{color:#C8392A !important;margin-top:10px !important}
+.gate-error{color:#C8392A !important;margin-top:10px !important;font-weight:700;background:#C8392A1a;border-radius:6px;padding:8px}
 
 .wrap{max-width:760px;margin:0 auto;padding:24px 20px 64px}
 .eyebrow{font-size:13px;color:var(--ink-faint);letter-spacing:.06em;text-transform:uppercase}

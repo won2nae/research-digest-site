@@ -96,7 +96,7 @@
 
       form.addEventListener("submit", async (ev) => {
         ev.preventDefault();
-        const passphrase = input.value;
+        const passphrase = input.value.trim().replace(/^["']|["']$/g, "");
         const data = await tryDecrypt(passphrase, encrypted);
         if (data) {
           try { sessionStorage.setItem(SESSION_KEY, passphrase); } catch (e) {}
