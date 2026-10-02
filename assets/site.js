@@ -35,19 +35,29 @@
     }
   }
 
+  function renderMd(md) {
+    // marked 로드 실패 등 예상 못한 상황에서도 빈 화면 대신 원문 텍스트는 보이게.
+    try {
+      if (window.marked) return marked.parse(md);
+    } catch (e) {}
+    const div = document.createElement("div");
+    div.textContent = md;
+    return `<pre style="white-space:pre-wrap;font-family:inherit">${div.innerHTML}</pre>`;
+  }
+
   function renderDay(data) {
     const app = document.getElementById("app");
     const tabButtons = data.tabs
       .map((t, i) => `<button class="tab-btn" aria-selected="${i === 0}" data-i="${i}">${t.title}</button>`)
       .join("");
     const panels = data.tabs
-      .map((t, i) => `<section class="panel ${i === 0 ? "active" : ""}" data-i="${i}">${marked.parse(t.md)}</section>`)
+      .map((t, i) => `<section class="panel ${i === 0 ? "active" : ""}" data-i="${i}">${renderMd(t.md)}</section>`)
       .join("");
     app.innerHTML = `
       <div class="wrap">
         <div class="eyebrow">데일리 리서치 브리핑</div>
         <h1 class="page-title">${data.date}</h1>
-        <div class="shock">${marked.parse(data.shock_md)}</div>
+        <div class="shock">${renderMd(data.shock_md)}</div>
         <nav class="tabs">${tabButtons}</nav>
         ${panels}
       </div>`;
