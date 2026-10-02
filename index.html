@@ -8,9 +8,17 @@
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-
+<div id="gate" class="gate">
+  <form id="gate-form">
+    <h1>비공개 브리핑</h1>
+    <p>접근 코드를 입력하세요.</p>
+    <input id="gate-input" type="password" autocomplete="off" autofocus>
+    <button type="submit">열기</button>
+    <p id="gate-error" class="gate-error" hidden>코드가 올바르지 않습니다.</p>
+  </form>
+</div>
 <main id="app" hidden></main>
-<script id="__DATA__" type="application/json">{"dates": ["2026-10-01", "2026-09-30", "2026-09-29", "2026-09-28", "2026-09-27", "2026-09-26", "2026-09-25", "2026-09-24", "2026-09-23", "2026-09-22", "2026-09-21", "2026-09-20", "2026-09-19", "2026-09-18", "2026-09-17", "2026-09-16", "2026-09-15", "2026-09-14"]}</script>
+<script id="__DATA__" type="application/json">{"salt": "sR+vPJL2PtfVrEIfvX4n1Q==", "iv": "sNlKiQucJ0w7pgvz", "ct": "wIxrkovaPU6GGtItGnW0gw3w/KEhobwJJNcH9Onyp5+b4mqIgSD14KeZRN+hAGBn/NrY8bpPkR50tYOb7pxfRCnnE9TlJjU+dx6MMhucryl+oqcWT3RtsozP9dR3QZb7R5YrZtSbGFKVwnbwen6nWnfsVGvzCbhp9BW2wzTQI0udR9a0mjgywrjZaRZjBdZPVMyyFUssPaPRFWZ44gnvmS1JehGiZc9D+Xy7a8vQgGUGOX758c3prWNF60UtAPs56vIV+sTJZUFJRGArfAabovsptV+aeAQOuGQmFENgHHHFdQxZ/6JOmJNLqXKotjd5ZI04KgmJfrkHLtI470Cwn9SKfchBSHpDXPEYUY7Q3RiU+X5TMkqj"}</script>
 <script src="assets/marked.min.js"></script>
 <script src="assets/site.js"></script>
 <script>Site.init("index");</script>

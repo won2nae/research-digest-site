@@ -8,9 +8,17 @@
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
 <body>
-
+<div id="gate" class="gate">
+  <form id="gate-form">
+    <h1>비공개 브리핑</h1>
+    <p>접근 코드를 입력하세요.</p>
+    <input id="gate-input" type="password" autocomplete="off" autofocus>
+    <button type="submit">열기</button>
+    <p id="gate-error" class="gate-error" hidden>코드가 올바르지 않습니다.</p>
+  </form>
+</div>
 <main id="app" hidden></main>
-<script id="__DATA__" type="application/json">{"date": "2026-09-20", "shock_md": "## 오늘의 매크로 충격 지표\n\n- **코스피** 상승 +2.66% (현재 6894.23, 전일 6715.41, 임계값 1.5% 초과)\n\n---\n", "tabs": [{"title": "매크로(경제)", "md": "## 매크로(경제)\n\n오늘 수집된 리포트가 없습니다.\n\n---\n"}, {"title": "채권", "md": "## 채권\n\n오늘 수집된 리포트가 없습니다.\n\n---\n"}, {"title": "산업 섹터별", "md": "## 산업 섹터별\n\n오늘 수집된 리포트가 없습니다.\n\n---\n"}, {"title": "투자전략", "md": "## 투자전략\n\n오늘 수집된 리포트가 없습니다.\n"}, {"title": "AI 종합의견 (참고용)", "md": "## AI 종합의견 (참고용)\n\n> **이 의견은 AI가 위 증권사 리포트들을 종합해 참고용으로 제시하는 것으로, 특정 증권사의 투자 조언이 아닙니다.**\n\n데이터 수집이 이루어지지 않아 오늘의 매크로, 채권, 산업 섹터에 대한 구체적인 분석이 어렵다. 다만, 시장의 일반적인 흐름을 고려할 때, 단기적인 변동성 속에서도 장기적인 구조적 요인들이 여전히 중요한 영향을 미칠 수 있는 점에서, 그에 대한 주의 깊은 관찰이 필요한 시각도 가능하다."}]}</script>
+<script id="__DATA__" type="application/json">{"salt": "QoUgPTOdnQE52Rzqs6XSmw==", "iv": "DrklZVL2nlPq4Xoe", "ct": "yjwtl517TFMga6LEDy6nf4cd2F5GPgE/sN8GF4U1EXEtHzzNjVjHGQQj0RAWDSa7cEkePg62RRTwt6pDwGTxlld3KEVsJim9HZTPmoQhUTm8SIX55m6Exy5XS0mgDFf144w1prtCl49kBFNm8rrbJgEm4muw901toS9B2C75AdgGesCa1F+bron590MU5XW9FDc5lb1mX/fLWxCDclB8FojK5vHwEtEpbTnUOvGh3zmbzi9B98zsRuixI4chK9eHHUcCsXGZXRkJFcDPaepgLfQkG3TD4ftIe16v0k26YmA61svDklfLNUXKyXgHDA8QYx7XZDvn390fiFpzh5pBGgb4uTPTGOqhTFvaiXWhzrE15TM8RsVmnvau0vBRyzaahgldYruNzWpF3WfhMhPMdBUmXaxuu1okAi1c6rxHrDctTdWV6RgQybHBdkaHc6mLnheufrNoVFO0XKYESjj5Cnp3Xvdor24+lNA4dP/rPsiM7Y0gRvvAE/RAoSBP7knGb/1yToAPSBQoKbQleGJHkoItSyOtO0QeYxRX2CIKqTwM2JqDts9iMhFHLZbzvHYVP3Z+427X8N4vIw+tPBvN6HdOnfgy/OVScbNyiWbjS1UGfdsc1zslp0Kp5lJTT8rn0qM1bb8rwJoz5bm3ZhbesBxjR77o64Dn2THCMm3hz5kp4CtBBp/4cPgth66SP97qbAkhG8d/jl2wXmqZ9dG5FtglgETCUdvDr3167wU7XqEwu3r5Qe7JROXMWwjWLqlHtFKTKgf5U+LZzwJlAL9/qMItge66A8yGOjVK1B1Bdnw+uI/Hc6PW11tFcSX/QKXh96aoYgHr+biUNJa+pN2JhIYOwWTYJ35GOn7V99LEdPRFWVsLBGx8DkkldMYN++mIcdjb8+QkRvByWWa2YKWUD88dzV9ln4FDsTJukyjiQOiCotkpRC9K2t8v85QCoKxiwfnjv7+GKleBaQG7f8sPbUYFKGE5M6VxjWieK5foJyLOLGdJWC2LJZB4QXop4lL+gxGm4acfKbMEKG5D/l3B+Fcbr3O6GbBXSyh/L8wBb6VtPOZaOruqmKmlGGxCUcIin8u8FWZ2PkREum/IhcUpmF3JGzhs0x4MMSE69qEJ0GYCX9eKwet7Nehy5cXTHvWBiGAiajUj/Uc/Qqx8Gvcw4GBvYQpiHP1Pdt9g0F8wlm/Y+Z2pU8XqF/XdCNE/4l+N4MXKe6ocZYkSoY7kuyMZJY9gh1hf160RroACnaz3TxEN0n7m2UENQsXDn3yTcfDVyef61q/mBOl/oMN9K1MbkPNJzBX+NXOBrubt2lEHNw4XhAb1sRrO/nhRgtY7zA5dHcGQA/D5wA3wc+xLOZoZy9HF0ZnwV5AlDhxoklrnN7GR0sU6o89CGsqSQqqYYeJuhk51fEdAYdXkEaCE1cDrDgJbdLRX1QoDSyfsEURkyR7HDn0PNppH4kp/975DMvVmCtePqAIwk1lqF5biOSika1WmPwv18oixLc9KjntjpjunoEXC7ps6nAkpiU5jr5dLMYizQBRFhF/ZpaE1wHgMR/NVd3LACShn8Rehbcm95cbgRzdHcSzxx3BjF0b4BxbG3FcWxv4Cgec4/BKylVSBTT9Cc+5Kir2sDjvl+eMoRtEX+n6XbQVqcgi/YZgfMbzeHUsOjhJOi0jUb+CDUULO"}</script>
 <script src="../../assets/marked.min.js"></script>
 <script src="../../assets/site.js"></script>
 <script>Site.init("day");</script>

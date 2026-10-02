@@ -8,9 +8,17 @@
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
 <body>
-
+<div id="gate" class="gate">
+  <form id="gate-form">
+    <h1>비공개 브리핑</h1>
+    <p>접근 코드를 입력하세요.</p>
+    <input id="gate-input" type="password" autocomplete="off" autofocus>
+    <button type="submit">열기</button>
+    <p id="gate-error" class="gate-error" hidden>코드가 올바르지 않습니다.</p>
+  </form>
+</div>
 <main id="app" hidden></main>
-<script id="__DATA__" type="application/json">{"date": "2026-09-25", "shock_md": "## 매크로(경제)\n\n오늘 수집된 리포트가 없습니다.\n\n---\n", "tabs": [{"title": "채권", "md": "## 채권\n\n오늘 수집된 리포트가 없습니다.\n\n---\n"}, {"title": "산업 섹터별", "md": "## 산업 섹터별\n\n오늘 수집된 리포트가 없습니다.\n\n---\n"}, {"title": "투자전략", "md": "## 투자전략\n\n오늘 수집된 리포트가 없습니다.\n"}, {"title": "AI 종합의견 (참고용)", "md": "## AI 종합의견 (참고용)\n\n> **이 의견은 AI가 위 증권사 리포트들을 종합해 참고용으로 제시하는 것으로, 특정 증권사의 투자 조언이 아닙니다.**\n\n데이터 수집이 이루어지지 않아 오늘의 매크로, 채권, 산업 섹터에 대한 구체적인 정보가 부족한 상황이다. 이 점에서 시장의 단기적 움직임이나 주요 흐름을 판단하는 데 제약이 있을 수 있다. 다만, 외부 요인이나 기존의 경제 지표에 따라 시장이 반응할 가능성도 배제할 수 없다는 시각도 가능하다."}]}</script>
+<script id="__DATA__" type="application/json">{"salt": "qfN3EAIZlhJQO/R2/9eEww==", "iv": "2xrs3OPnoK2JcCp8", "ct": "rXiBRhTyqPFGIMiUy5IqOvUrfK9PXz76V2wOH44UK6cwGI//tC//EmF6OVA3w2RrhXSL68r1/D6+zUgllOvnNstFWITU//5VpDu23uC4d+Tskc3n/jZQ19IG3FeBvhw0GSUL6i5dkjQV6rQo5SGWtz7UvPKmbm7pHqdcOYEkDckUvaCRR4zrFjyKCEo8v/mH1iREcqZt0gJSwDwcUwaBCGBrpi0vQYh+KXbREOEQAOUQ/fsWMxaCXPfCUV2yDqKZDUzHICeHo/UdlizPj8/gLb3fjE3ZBx7iQhHT/m8JeOSmejf9ZDNiXp9seNLQ1m9etkOedntf5arMRMSicQZpDOK1WUHu1geamYSZOXUsi+1xbYVxvLXQJ9xKsO60IsdCV1hKiMKX1ebFmKVd8FxuioWYVjgT5J4t8ANTvNPn9VBHBEYDXz5a3qQT8kDDqnrwu47rn1b193ejatDL9P/YaIr9iPKJp5f2iQyCJXUscGWy0CI0JRcFu25npv8tLGQuY8GXP8QAvE2ajw2VyE9zIwOx41rpd4A796ll95ZCQD5BIc8+mhMWIfHz/eapoEbALxL1OW+xK4xQtzHDwA9KL0pOXXmDKzKNTH03OhJuQmvezF8KCMgp9vV8H0hZ7NNexNX6f+CDZFe6plS9I3jsLwb6OVCpuSkM52Xb0bpDObz1BF4DCvYq40hI/udUV4s66AwTHfVGGN8PzE9EGSyszZiPfY/XcqCzXnMxXdSi8sKK5ae1u+zHjLrNiZDZYeyzIWgMJbGTT3XXxcx/ZPvyUx5jDEtLCWI5Y61/MTCDwI9Nc9uCOjs3S2pCweWEHlb/QyUxFHNtGzK++1QMQd5gLkp+e45uGuPIF/fOTfDVnzE8V7R44x/0KeEx7FcyNcNRrOeKwt8yVh+jwnc2+U8E1NGGhYjtxX0pghBrNY2+QpbF8QO1ROMHW+28choyNNiqffAwb6KPTZjVxhceD0zdC65IeWAtZhr6zXEb+hE9h5Y8CahD0g4ba8ffqv9+l2gvy6uaspel7PSNB7iDoIhCQB4aRnLx78Le3O1ixR/R3Z3k93wWzO1zSVtFYPwJz6kAsdHXrdyKM042QIz0wljGsPFTUzuYv+p1xpooaZDP3kMj1AP8Cko1aRrSzt7OIjzdxTH1bW1SAZ6XUp9+OYgZ4ZuWXqRUKTwZCM0layGa+1fxIUZ8QfqYi41H2W8QZq8pYFisSbBRxkgA1sqWTkyPCBm7XwzZuve6WwhRb1sv2xel3M6rBVMqFnepVKdRs60L2H8jgMZW6f2aMlgjY1Mzn2d7rXd/0TF2hR7YiQfTii/RWL4wcHLqAbvaLFUcMdT6el86dEF9AKJsx0dRioLxs0XvRYCgCjTOuOy2wEAVLjLr/w31jx/F+wLF3KqdV8EpP28fB3qNXr8Yk0ZGMNWes9fOK26Gf2lr/mx8eI0UYNuXHgw8nkQt/EE="}</script>
 <script src="../../assets/marked.min.js"></script>
 <script src="../../assets/site.js"></script>
 <script>Site.init("day");</script>

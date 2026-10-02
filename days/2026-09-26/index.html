@@ -8,9 +8,17 @@
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
 <body>
-
+<div id="gate" class="gate">
+  <form id="gate-form">
+    <h1>비공개 브리핑</h1>
+    <p>접근 코드를 입력하세요.</p>
+    <input id="gate-input" type="password" autocomplete="off" autofocus>
+    <button type="submit">열기</button>
+    <p id="gate-error" class="gate-error" hidden>코드가 올바르지 않습니다.</p>
+  </form>
+</div>
 <main id="app" hidden></main>
-<script id="__DATA__" type="application/json">{"date": "2026-09-26", "shock_md": "## 매크로(경제)\n\n오늘 수집된 리포트가 없습니다.\n\n---\n", "tabs": [{"title": "채권", "md": "## 채권\n\n오늘 수집된 리포트가 없습니다.\n\n---\n"}, {"title": "산업 섹터별", "md": "## 산업 섹터별\n\n오늘 수집된 리포트가 없습니다.\n\n---\n"}, {"title": "투자전략", "md": "## 투자전략\n\n오늘 수집된 리포트가 없습니다.\n"}, {"title": "AI 종합의견 (참고용)", "md": "## AI 종합의견 (참고용)\n\n> **이 의견은 AI가 위 증권사 리포트들을 종합해 참고용으로 제시하는 것으로, 특정 증권사의 투자 조언이 아닙니다.**\n\n데이터 수집이 이루어지지 않아 오늘의 매크로, 채권, 산업 섹터에 대한 구체적인 분석이 어려운 상황이다. 다만, 시장의 일반적인 흐름을 고려할 때, 추가 정보가 공개될 경우 기존의 경제 지표나 섹터별 성과에 따라 방향성이 재조정될 가능성도 있다. 투자자들은 주의 깊게 시장 동향을 지켜보는 한편, 유동성과 변동성 요인을 고려한 전략 수립이 필요해 보인다."}]}</script>
+<script id="__DATA__" type="application/json">{"salt": "uA/kmKsS+Wqsa6ufW6utmA==", "iv": "xxt1oVwxGjRsp9LA", "ct": "RqZZYFBCgztFLpQNlgq5HYo6mWNaxoPsf/+uNCpBu4PJRgmzKDlXaxsBSzla4N3q1D467pcTHYpLO75dpwxi5RqVc/DJjviLNZj0VpSxglbFpoF5gkGlomDo0DAfRR1EF14gorm+yChtF0w7bPcmT8/jGsk/CWoviaoQp48vf366xhYG6bdBctF4Vy5WciLua1yDCwpxSTon+Xh7TA0mbnRcMqVwdEiS3tQciEtehfjY+4I79wpX4TYvi58GIUMNHC+v12eiQldcvurTVXDzKFllP8uFP0UrtI3n7EUSFKRYOEJFb2vJ14gD0yIHahVlhFVOckra2zIBT5/S9SmEflikJ1d1e/32nXT/A5PuDj1EyMX12MKKCMHxQygCi83H4eih/mFEP+EwZXuCPwNtCQPaU2RCqXm3xk8HnQXnXfB9Dwf3RduD55em9qPP1SCi53nbFzNa2vbecRW7Sz+0QOJ5tnokubYgZlPeM/GlurN45Jw7G17Q66fCG9vjcn5blbfP3OuuA7CcY0GUwKf/1oZLcQBR+jJ7kI92yrEyi+KYn0AbpxcvPBNCJQypVfVa/0MJpoolE8pwCImCuHktuDaS/AKtQDK0zTpemtJZpJj1DhpaJcsFlQFmOUkWBFP8x+tWXqP1h6RqG3D9VzeTkB/6EI8RjJGgjC/xtX4zNe82mAXUimasCy4l7w7RLniXnNLkUXtJvdDKDQIoAuCcy8IvG1g4mxv4wDNmqUfJlcx40oY7hS5WxG/REwJxJ/OzyL8nRn/T5UjFzStAX/A08QP/TV81vBAac6NBurjco5te+2QBhxBPTHiJ06uGADqM2ZpTlFC4aHn01YJ5HFCo8QuYa2zQSFgI4WJbHX24knq5Mx7gW8P2LWm4CTJqDYNHUN0bZyOrJphxFVRkqw5rOICMFI2Wf/o0bM6MltxPT1leg9ohqecq2EdYIe4eGWgEnbKlzQDLDhOfNgQE98TE5sEuJ6ZnSRbk4Wzb5FZwVa/02/+axC4Q5ccnncAKmahlkDtb8+OOVNjmLSsdtSvFwaqU+5I5qAylM3pgkkZXlGNztQcEYBRaOA/N7TMmMpZv473/IdqSu4fevReIVnKIl3y3qh6Zv5I/LbkXRse9rPwHCHhueyRqemz/LBn93BmXSWXH+ruAjNBdzpRnsp4QIdcjyYQHdXZOBjpe/2PAuxLJ04tywl4Z0JQwW+151Dxi765LsXdXdsI2te0FH0sSR37to+cdYmMexj+oI000ti7yPn+U4DukSxcF3w9eW5loF7FRKuQ6Ysmz35VG5oQ9ary18z1r/bNcWRn5XbeyGxFMhCij4gOfq7ogaOUgcpUpa2bqJJcfz99iIgfnibbYTgEgHTQtn0CRKUVeHfebopEH4ESf7AhDEBjCfJ/Mn6ERnSxVkpG7MamOcd++Ba+ZnF9Pj8u3V+DKwO1w2KDtt1l3i32mTVa6M9f6X1ZbDP3dnakgeS7oIPay2FAYUs6JyW7DP8sBnx9duLzF8F7rFzsetMM9AKjDawxtnztqa6M9WJtFOfa+YkX49xNk2tMRQsWXsUzZXxK9aHWeRsE="}</script>
 <script src="../../assets/marked.min.js"></script>
 <script src="../../assets/site.js"></script>
 <script>Site.init("day");</script>

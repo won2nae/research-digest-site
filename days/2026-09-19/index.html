@@ -8,9 +8,17 @@
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
 <body>
-
+<div id="gate" class="gate">
+  <form id="gate-form">
+    <h1>비공개 브리핑</h1>
+    <p>접근 코드를 입력하세요.</p>
+    <input id="gate-input" type="password" autocomplete="off" autofocus>
+    <button type="submit">열기</button>
+    <p id="gate-error" class="gate-error" hidden>코드가 올바르지 않습니다.</p>
+  </form>
+</div>
 <main id="app" hidden></main>
-<script id="__DATA__" type="application/json">{"date": "2026-09-19", "shock_md": "## 오늘의 매크로 충격 지표\n\n- **코스피** 상승 +2.66% (현재 6894.23, 전일 6715.41, 임계값 1.5% 초과)\n\n---\n", "tabs": [{"title": "매크로(경제)", "md": "## 매크로(경제)\n\n오늘 수집된 리포트가 없습니다.\n\n---\n"}, {"title": "채권", "md": "## 채권\n\n오늘 수집된 리포트가 없습니다.\n\n---\n"}, {"title": "산업 섹터별", "md": "## 산업 섹터별\n\n오늘 수집된 리포트가 없습니다.\n\n---\n"}, {"title": "투자전략", "md": "## 투자전략\n\n오늘 수집된 리포트가 없습니다.\n"}, {"title": "AI 종합의견 (참고용)", "md": "## AI 종합의견 (참고용)\n\n> **이 의견은 AI가 위 증권사 리포트들을 종합해 참고용으로 제시하는 것으로, 특정 증권사의 투자 조언이 아닙니다.**\n\n데이터 수집이 이루어지지 않아 오늘의 매크로, 채권, 산업 섹터에 대한 구체적인 분석이 어려운 상황이다. 다만, 시장의 변동성과 투자자 심리에 따라 이전의 경향성과 외부 요인을 고려한 접근이 필요할 수 있다. 이에 따라 단기적인 변동에 대한 유연한 대응이나, 장기적인 전략적 포지션 조정을 고려하는 시각도 가능하다."}]}</script>
+<script id="__DATA__" type="application/json">{"salt": "EkuRR7rdyneIiGAYju1Usw==", "iv": "J9cWdwiN75nqfvtd", "ct": "uuckF9FIJUwOmpLKSLGpEfFqscIGpJB2pzVj/hFw5PFbTYJQzzvyllH7G4zj5LuCUp281ps9gpIxisPGpOiY0lLzkP4wWfJtqWMc8ZIq42ifdI0PCSbEx0NHfwkHFnJ2tQJGRjIakhrh0RT8igZobH5YK1ffqXPdIJFLi52fZLnyKZFDw2iHgNonf+7pXXqjbVLtLaQ02VLDf8JQ9kFV2aPnUq2Ku7arpsKMnQbnQveF0ezLjIzOYE9lpXOBeW+MmGvGUCWnMDn8fTKSu5KdTCgSuqeqXuOv23fijpOdcPQO4b66hRU53WB1bjz1D6QAMtid27bx4SFlsqVutpXqUq2PmELjiKeRTfUVIgUvYC2jNjzFpI8aGzftS56z9xDj4mmoD7wM075EH98MzFtYuVwj7VZkLKbP19PaDLUhmMk0af7jPY+0FCwYR2WUhoq2mkclXPnmCwjvVPZdgcCu8ct6zzMy6SR22rzQsSXSClmD2vzSB8a+WSi293QTQ816f69NUVVAxoVnKkVhBVMIcrbygofy63oeZ2ptLZsFV2XHi8Qumt8m6/Wezc514s8XQ32sQQz6SrBZa+eMh42RIP+5jbnBxfwHGkzojDFLvoc1hYk68mcCeh6xPYx1C6j9CK5S1wkRaUH/7R1Q6IyaUTwmCMrB/9kJUyk2kqyWKEzfqKRtlyLVPQo87FgXInDFv4/SxQNYI/462xkdWw08O/V10YQ7e1bk/PNUrMwBht2/WKH+MtV2l8HyVL/TZLG3UtZxLNcCw1ZZ3Nt7TOElcO+cuw83M7Pv4/vsd4M9VF2VFdlEdK/CNAfc39O7F58Xi3IP1ZuHP7FyYRXu2G2XD3bo2+iX2v/Rz5d0x8yd/nKVbIyXVyH2+NT6XCpeTnDLtw+0NaKecnBu7BapyKcZBpzCX+Sexecje+NZmsuDkHZCuUIEe+OLXQ8Q0KgeLBMgzSEoeJy8rtRCGkc+3dAMXz0DfxPByGJvSisTPNp093uX1qBR/iFOb7FyLPouyK3mW2GFR9qiVxK35DjACKqNrGw0v0mHrTXsW9xyul/4YlmtLwvrlKXAONXMiljomOUmb5jf3sdyams9G8fLpttW8bR9wQvzteE8ldKSynjtXhzWAcgbxHTYNZc5VntNyWaV7KPZZHkwV7W/N2Zvo0VLmVsA0WnUvIdv4+JQTo4IBjG9RWdvpLVTjvi/IBbLBuppb/tKEU6KfVDeumxeZ4OyZ+LRcXr3vgxVudM2znEBy2ZMiKTchybvLmZ26f/IXjGmNQjVyu03Cgxmt/emAHyed3EWnrOTIfVhvYC4FiTmRRoQgD7WZQ3P4r9wJfYyNn2J0DeZWxAJL6SdDpOfRmq5mEMQzUN8Gp3PAHeDKDM7xJQZ9CZyt/pJDu4DeYzbfoT8IqtrZSvPIETbn6QSgfhfNNqdAeuTR3jMBdi/yhFQhigONiGsz0Ls7Lajuv9EFB5CWpYBxrVOFvM5hnaInWgUigcQBVG4juws9drV/kYbJCwYdcJVrtfW8CkxPRM+MWD7OejF4Jog8bU1jejZbMruizKbsywYR3o5haF1rFgg4F51NJI0nfqh6CQDIUkglHI52EcAp4W8CadMEv4b2P5oM6JW8B/KF6xX3i9aGOGtcQrvtRcnH5s9P1U+v2LbuCdTwvbH+VdJc2wMCKBbL8mxPHhyZnqIpj2LaixVGXS8aiGPmg3n0sDZS5ZggNQoaYdGqEW8KB24V0Ep"}</script>
 <script src="../../assets/marked.min.js"></script>
 <script src="../../assets/site.js"></script>
 <script>Site.init("day");</script>
