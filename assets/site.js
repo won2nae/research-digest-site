@@ -83,7 +83,8 @@
   }
 
   function showApp(data, pageKind) {
-    document.getElementById("gate").hidden = true;
+    const gate = document.getElementById("gate");
+    if (gate) gate.hidden = true;
     const app = document.getElementById("app");
     app.hidden = false;
     if (pageKind === "day") renderDay(data);
@@ -92,7 +93,15 @@
 
   const Site = {
     async init(pageKind) {
-      const encrypted = JSON.parse(document.getElementById("__DATA__").textContent);
+      const raw = JSON.parse(document.getElementById("__DATA__").textContent);
+
+      // 게이트가 꺼진(공개) 빌드: __DATA__가 그냥 평문이라 바로 렌더링.
+      if (!(raw && raw.salt && raw.iv && raw.ct)) {
+        showApp(raw, pageKind);
+        return;
+      }
+      const encrypted = raw;
+
       const form = document.getElementById("gate-form");
       const input = document.getElementById("gate-input");
       const error = document.getElementById("gate-error");
