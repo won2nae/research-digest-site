@@ -90,9 +90,8 @@ a{color:var(--accent)}
 .shock h2,.shock h3{display:none}
 .shock li{font-size:14px}
 
-.tabs{position:sticky;top:0;z-index:5;display:flex;gap:6px;overflow-x:auto;background:var(--bg);padding:10px 0;margin-bottom:6px;border-bottom:1px solid var(--border)}
-.tabs::-webkit-scrollbar{display:none}
-.tab-btn{flex:0 0 auto;border:1px solid var(--border);background:var(--surface);color:var(--ink-muted);padding:7px 14px;border-radius:999px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;background:var(--bg);padding:10px 0 14px;margin-bottom:6px;border-bottom:1px solid var(--border)}
+.tab-btn{border:1px solid var(--border);background:var(--surface);color:var(--ink-muted);padding:7px 14px;border-radius:999px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap}
 .tab-btn[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
 
 .panel{display:none}
