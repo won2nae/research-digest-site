@@ -18,10 +18,13 @@
     ".IXIC": (v) => num(v, 2),
   };
   const INDEX_CODES = ["KOSPI", "KOSDAQ", ".INX", ".IXIC", ".DJI"];
+  const INDEX_LABELS = { KOSPI: "코스피", KOSDAQ: "코스닥", ".INX": "S&P 500", ".IXIC": "나스닥", ".DJI": "다우존스" };
   const RATE_CODES = ["KR10YT=RR", "US10YT=RR"];
+  const RATE_LABELS = { "KR10YT=RR": "한국 10년 국채금리", "US10YT=RR": "미국 10년 국채금리" };
   const SERIES_COLORS = ["#0B6E63", "#D98C2B", "#5B7DB1", "#B5485D", "#7A8B99"];
 
   let charts = [];
+  let idxChart = null;
   let lastRender = null;
 
   function num(v, digits) {
@@ -69,13 +72,139 @@
     if (!market) return "";
     const cards = Object.entries(market)
       .map(([code, ind]) => `
-        <div class="stat">
+        <div class="stat" data-change="${ind.change}" data-unit="${ind.unit}">
           <div class="stat-label">${esc(ind.label)}</div>
           <div class="stat-value num">${esc(valueText(code, ind))}</div>
           <div class="stat-change num ${changeClass(ind)}">${esc(changeText(ind))}</div>
         </div>`)
       .join("");
     return `<div class="stat-grid">${cards}</div>`;
+  }
+
+  // 고정 "충격 기준"을 코드로 박아두지 않고, 보는 사람이 직접 기준을 조절할 수 있게 한다.
+  const THRESHOLD_KEY = "briefing-threshold";
+  function loadThreshold() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(THRESHOLD_KEY));
+      if (saved && typeof saved.pct === "number" && typeof saved.bp === "number") return saved;
+    } catch (e) {}
+    return { pct: 1.5, bp: 10 };
+  }
+
+  function thresholdBar() {
+    const t = loadThreshold();
+    return `
+      <div class="threshold-bar">
+        <span class="muted">내가 정하는 변동 기준</span>
+        <label>지수·환율·원자재 <input type="number" id="th-pct" step="0.1" min="0" value="${t.pct}">%</label>
+        <label>금리 <input type="number" id="th-bp" step="1" min="0" value="${t.bp}">bp</label>
+      </div>`;
+  }
+
+  function applyThreshold() {
+    const pctInput = document.getElementById("th-pct");
+    const bpInput = document.getElementById("th-bp");
+    if (!pctInput || !bpInput) return;
+    const pct = parseFloat(pctInput.value) || 0;
+    const bp = parseFloat(bpInput.value) || 0;
+    try { localStorage.setItem(THRESHOLD_KEY, JSON.stringify({ pct, bp })); } catch (e) {}
+    document.querySelectorAll(".stat[data-unit]").forEach((card) => {
+      const change = Math.abs(parseFloat(card.dataset.change));
+      const limit = card.dataset.unit === "bp" ? bp : pct;
+      card.classList.toggle("flagged", change >= limit);
+    });
+  }
+
+  function wireThreshold() {
+    const pctInput = document.getElementById("th-pct");
+    const bpInput = document.getElementById("th-bp");
+    if (!pctInput || !bpInput) return;
+    pctInput.addEventListener("input", applyThreshold);
+    bpInput.addEventListener("input", applyThreshold);
+    applyThreshold();
+  }
+
+  async function fetchHistory() {
+    try {
+      const res = await fetch("assets/history.json");
+      if (!res.ok) return {};
+      return await res.json();
+    } catch (e) {
+      return {};
+    }
+  }
+
+  // 과거(월별, 수십 년치) + 파이프라인이 매일 쌓은 최근 구간(일별)을 하나의 연속 시계열로 합친다.
+  function buildSeries(code, hist, ascDays) {
+    const daily = ascDays
+      .filter((d) => d.market && d.market[code] != null)
+      .map((d) => [d.date, d.market[code].value]);
+    const earliestDaily = daily.length ? daily[0][0] : null;
+    const points = [];
+    for (const [d, v] of hist[code] || []) {
+      if (earliestDaily && d >= earliestDaily) continue;
+      points.push({ x: Date.parse(d), y: v });
+    }
+    for (const [d, v] of daily) points.push({ x: Date.parse(d), y: v });
+    return points;
+  }
+
+  // 연초 시점 값을 100으로 놓고 그 이후 % 변화로 환산 (올해 구간만).
+  function ytdSeries(points) {
+    const year = new Date().getFullYear();
+    const yearPts = points.filter((p) => new Date(p.x).getFullYear() === year);
+    if (!yearPts.length) return [];
+    const base = yearPts[0].y;
+    return yearPts.map((p) => ({ x: p.x, y: Math.round((p.y / base - 1) * 1000) / 10 }));
+  }
+
+  function timeLineChart(canvas, datasets, opts = {}) {
+    const muted = token("--ink-muted");
+    const grid = token("--border");
+    return new Chart(canvas, {
+      type: "line",
+      data: {
+        datasets: datasets.map((d, i) => ({
+          label: d.label,
+          data: d.data,
+          borderColor: d.color || SERIES_COLORS[i % SERIES_COLORS.length],
+          backgroundColor: d.color || SERIES_COLORS[i % SERIES_COLORS.length],
+          tension: 0.15,
+          pointRadius: 0,
+          pointHoverRadius: 4,
+          borderWidth: 2,
+          spanGaps: true,
+        })),
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: "index", intersect: false },
+        plugins: {
+          legend: { display: datasets.length > 1, position: "bottom", labels: { color: muted, boxWidth: 12, usePointStyle: true } },
+          tooltip: {
+            callbacks: {
+              title: (items) => (items.length ? new Date(items[0].parsed.x).toLocaleDateString("ko-KR", { year: "numeric", month: "short", day: "numeric" }) : ""),
+              label: (item) => `${item.dataset.label}: ${opts.yFormat ? opts.yFormat(item.parsed.y) : item.parsed.y}`,
+            },
+          },
+        },
+        scales: {
+          x: {
+            type: "linear",
+            min: opts.xMin,
+            grid: { display: false },
+            ticks: {
+              color: muted,
+              callback: (v) => new Date(v).toLocaleDateString("ko-KR", opts.dayTicks ? { month: "short" } : { year: "numeric" }),
+              maxRotation: 0,
+              autoSkipPadding: 20,
+            },
+          },
+          y: { grid: { color: grid }, ticks: { color: muted, callback: opts.yTick } },
+        },
+      },
+    });
   }
 
   function lineChart(canvas, labels, datasets) {
@@ -152,6 +281,7 @@
     return `
       <section class="market-block">
         <div class="block-head"><h2>오늘의 시장</h2><span class="muted">전일 대비</span></div>
+        ${thresholdBar()}
         ${statGrid(market)}
         ${hasBars ? `<div class="chart-card"><h3>전일 대비 변동률</h3><div class="chart-box tall"><canvas id="day-bar"></canvas></div></div>` : ""}
       </section>`;
@@ -185,6 +315,7 @@
       });
     });
 
+    wireThreshold();
     destroyCharts();
     const bar = document.getElementById("day-bar");
     if (bar && data.market) {
@@ -193,27 +324,17 @@
     }
   }
 
-  function renderIndex(data) {
+  async function renderIndex(data) {
     const app = document.getElementById("app");
     const days = [...data.days].sort((a, b) => b.date.localeCompare(a.date));
     const asc = [...days].reverse();
     const latest = days[0];
-    const labels = asc.map((d) => d.date.slice(5).replace("-", "."));
 
-    const indexSeries = INDEX_CODES.map((code) => {
-      const base = asc.map((d) => d.market?.[code]?.value).find((v) => v != null);
-      return {
-        label: asc.find((d) => d.market?.[code])?.market[code].label || code,
-        data: asc.map((d) => {
-          const v = d.market?.[code]?.value;
-          return v == null || !base ? null : Math.round((v / base) * 1000) / 10;
-        }),
-      };
-    });
-    const rateSeries = RATE_CODES.map((code) => ({
-      label: asc.find((d) => d.market?.[code])?.market[code].label || code,
-      data: asc.map((d) => d.market?.[code]?.value ?? null),
-    }));
+    const hist = await fetchHistory();
+    const seriesByCode = {};
+    for (const code of [...INDEX_CODES, ...RATE_CODES]) {
+      seriesByCode[code] = buildSeries(code, hist, asc);
+    }
 
     const byMonth = {};
     days.forEach((d) => {
@@ -243,8 +364,6 @@
       })
       .join("");
 
-    const pctEntries = latest ? Object.entries(latest.market || {}).filter(([, ind]) => ind.unit === "%") : [];
-
     app.innerHTML = `
       <div class="wrap wide">
         <header class="hero">
@@ -256,16 +375,26 @@
         ${latest ? `
         <section class="block">
           <div class="block-head"><h2>최근 영업일 시장</h2><span class="muted">${esc(latest.date)} 종가</span></div>
+          ${thresholdBar()}
           ${statGrid(latest.market)}
         </section>
 
         <section class="block charts">
           <div class="chart-card span2">
-            <h3>지수 흐름 <span class="muted">· 첫 영업일 = 100</span></h3>
+            <div class="chart-head">
+              <h3>지수 흐름</h3>
+              <div class="chip-toggle" id="idx-mode">
+                <button data-mode="level" aria-selected="true">가격 수준</button>
+                <button data-mode="ytd" aria-selected="false">연초 대비 성과</button>
+              </div>
+            </div>
+            <div class="chip-toggle" id="idx-pick">
+              ${INDEX_CODES.map((c, i) => `<button data-code="${c}" aria-selected="${i === 0}">${INDEX_LABELS[c]}</button>`).join("")}
+            </div>
             <div class="chart-box"><canvas id="idx-chart"></canvas></div>
           </div>
           <div class="chart-card">
-            <h3>금리 추이 <span class="muted">· %</span></h3>
+            <h3>금리 추이 <span class="muted">· % · 미국은 1985년부터, 한국은 집계 시작일부터</span></h3>
             <div class="chart-box"><canvas id="rate-chart"></canvas></div>
           </div>
           <div class="chart-card">
@@ -280,13 +409,60 @@
         </section>
       </div>`;
 
+    wireThreshold();
     destroyCharts();
     if (!latest) return;
-    const idx = document.getElementById("idx-chart");
+
+    function renderIdxChart(mode, code) {
+      if (idxChart) {
+        idxChart.destroy();
+        charts = charts.filter((c) => c !== idxChart);
+      }
+      const canvas = document.getElementById("idx-chart");
+      if (!canvas) return;
+      let datasets;
+      if (mode === "level") {
+        datasets = [{ label: INDEX_LABELS[code], data: seriesByCode[code] || [], color: SERIES_COLORS[0] }];
+      } else {
+        datasets = INDEX_CODES.map((c, i) => ({
+          label: INDEX_LABELS[c], data: ytdSeries(seriesByCode[c] || []), color: SERIES_COLORS[i % SERIES_COLORS.length],
+        }));
+      }
+      const yearStart = mode === "ytd" ? Date.parse(`${new Date().getFullYear()}-01-01`) : undefined;
+      idxChart = timeLineChart(canvas, datasets, {
+        yFormat: (v) => (mode === "ytd" ? `${v >= 0 ? "+" : ""}${v}%` : num(v, 2)),
+        yTick: (v) => (mode === "ytd" ? v + "%" : num(v, 0)),
+        xMin: yearStart,
+        dayTicks: mode === "ytd",
+      });
+      charts.push(idxChart);
+    }
+
+    document.querySelectorAll("#idx-mode button").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("#idx-mode button").forEach((b) => b.setAttribute("aria-selected", b === btn));
+        const mode = btn.dataset.mode;
+        document.getElementById("idx-pick").hidden = mode !== "level";
+        const activeCode = document.querySelector('#idx-pick button[aria-selected="true"]')?.dataset.code || "KOSPI";
+        renderIdxChart(mode, activeCode);
+      });
+    });
+    document.querySelectorAll("#idx-pick button").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("#idx-pick button").forEach((b) => b.setAttribute("aria-selected", b === btn));
+        renderIdxChart("level", btn.dataset.code);
+      });
+    });
+    renderIdxChart("level", "KOSPI");
+
     const rate = document.getElementById("rate-chart");
+    const rateDatasets = RATE_CODES.map((code, i) => ({
+      label: RATE_LABELS[code], data: seriesByCode[code] || [], color: SERIES_COLORS[i % SERIES_COLORS.length],
+    }));
+    charts.push(timeLineChart(rate, rateDatasets, { yFormat: (v) => num(v, 3) + "%", yTick: (v) => v + "%" }));
+
     const bar = document.getElementById("bar-chart");
-    charts.push(lineChart(idx, labels, indexSeries));
-    charts.push(lineChart(rate, labels, rateSeries));
+    const pctEntries = Object.entries(latest.market || {}).filter(([, ind]) => ind.unit === "%");
     charts.push(barChart(bar, pctEntries.map(([, i]) => i.label), pctEntries.map(([, i]) => i.change)));
   }
 
