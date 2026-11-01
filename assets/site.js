@@ -297,7 +297,7 @@
       .join("");
     app.innerHTML = `
       <div class="wrap">
-        <a class="back" href="../../">← 아카이브</a>
+        <a class="back" href="../../reports/">← Reports</a>
         <header class="page-head">
           <div class="eyebrow">데일리 리서치 브리핑</div>
           <h1>${esc(data.date)}</h1>
@@ -324,6 +324,56 @@
     }
   }
 
+  function reportsGrid(days, dayPrefix) {
+    const byMonth = {};
+    days.forEach((d) => {
+      const m = d.date.slice(0, 7);
+      (byMonth[m] ||= []).push(d);
+    });
+    return Object.keys(byMonth)
+      .sort((a, b) => b.localeCompare(a))
+      .map((m) => {
+        const cards = byMonth[m]
+          .map((d) => {
+            const wd = WEEKDAYS[new Date(d.date + "T00:00:00").getDay()];
+            const kospi = d.market?.KOSPI;
+            const chip = kospi
+              ? `<span class="chip ${changeClass(kospi)} num">코스피 ${esc(changeText(kospi))}</span>`
+              : "";
+            return `
+              <a class="day-card" href="${dayPrefix}${d.date}/">
+                <div class="day-top"><span class="day-num num">${d.date.slice(8)}</span><span class="day-wd">${wd}</span></div>
+                <p class="day-head">${esc(d.headline || "요약 없음")}</p>
+                ${chip}
+              </a>`;
+          })
+          .join("");
+        const [y, mo] = m.split("-");
+        return `<section class="month"><h2>${y}년 ${Number(mo)}월</h2><div class="day-grid">${cards}</div></section>`;
+      })
+      .join("");
+  }
+
+  function newsBlock(newsMd) {
+    if (!newsMd) return "";
+    return `
+      <section class="block news-block">
+        <div class="block-head"><h2>전날 주요 뉴스</h2></div>
+        <div class="news-md">${renderMd(newsMd)}</div>
+      </section>`;
+  }
+
+  function reportsCard(days, latest) {
+    return `
+      <section class="block">
+        <div class="block-head"><h2>Reports</h2></div>
+        <a class="reports-card" href="reports/">
+          <div class="reports-card-title">전체 리포트 보기</div>
+          <div class="reports-card-sub muted">${days.length}개 영업일${latest ? " · 최신 " + esc(latest.date) : ""}</div>
+        </a>
+      </section>`;
+  }
+
   async function renderIndex(data) {
     const app = document.getElementById("app");
     const days = [...data.days].sort((a, b) => b.date.localeCompare(a.date));
@@ -336,41 +386,16 @@
       seriesByCode[code] = buildSeries(code, hist, asc);
     }
 
-    const byMonth = {};
-    days.forEach((d) => {
-      const m = d.date.slice(0, 7);
-      (byMonth[m] ||= []).push(d);
-    });
-    const archive = Object.keys(byMonth)
-      .sort((a, b) => b.localeCompare(a))
-      .map((m) => {
-        const cards = byMonth[m]
-          .map((d) => {
-            const wd = WEEKDAYS[new Date(d.date + "T00:00:00").getDay()];
-            const kospi = d.market?.KOSPI;
-            const chip = kospi
-              ? `<span class="chip ${changeClass(kospi)} num">코스피 ${esc(changeText(kospi))}</span>`
-              : "";
-            return `
-              <a class="day-card" href="days/${d.date}/">
-                <div class="day-top"><span class="day-num num">${d.date.slice(8)}</span><span class="day-wd">${wd}</span></div>
-                <p class="day-head">${esc(d.headline || "요약 없음")}</p>
-                ${chip}
-              </a>`;
-          })
-          .join("");
-        const [y, mo] = m.split("-");
-        return `<section class="month"><h2>${y}년 ${Number(mo)}월</h2><div class="day-grid">${cards}</div></section>`;
-      })
-      .join("");
-
     app.innerHTML = `
       <div class="wrap wide">
         <header class="hero">
           <div class="eyebrow">데일리 리서치 브리핑</div>
           <h1>시장 브리핑</h1>
-          <p class="sub">${latest ? esc(latest.date) + " 기준 · " : ""}주말·공휴일 제외</p>
+          <p class="sub">${data.generated_at ? "업데이트 " + esc(data.generated_at) + " · " : ""}주말·공휴일 제외</p>
         </header>
+
+        ${newsBlock(data.news_md)}
+        ${reportsCard(days, latest)}
 
         ${latest ? `
         <section class="block">
@@ -402,11 +427,6 @@
             <div class="chart-box"><canvas id="bar-chart"></canvas></div>
           </div>
         </section>` : ""}
-
-        <section class="block">
-          <div class="block-head"><h2>아카이브</h2><span class="muted">${days.length}개 영업일</span></div>
-          ${archive}
-        </section>
       </div>`;
 
     wireThreshold();
@@ -466,12 +486,31 @@
     charts.push(barChart(bar, pctEntries.map(([, i]) => i.label), pctEntries.map(([, i]) => i.change)));
   }
 
+  function renderReports(data) {
+    const app = document.getElementById("app");
+    const days = [...data.days].sort((a, b) => b.date.localeCompare(a.date));
+    app.innerHTML = `
+      <div class="wrap wide">
+        <a class="back" href="../">← 홈</a>
+        <header class="page-head">
+          <div class="eyebrow">데일리 리서치 브리핑</div>
+          <h1>Reports</h1>
+          <p class="muted">${days.length}개 영업일</p>
+        </header>
+        ${reportsGrid(days, "../days/")}
+      </div>`;
+  }
+
   function showApp(data, pageKind) {
     const gate = document.getElementById("gate");
     if (gate) gate.hidden = true;
     const app = document.getElementById("app");
     app.hidden = false;
-    lastRender = () => (pageKind === "day" ? renderDay(data) : renderIndex(data));
+    lastRender = () => {
+      if (pageKind === "day") return renderDay(data);
+      if (pageKind === "reports") return renderReports(data);
+      return renderIndex(data);
+    };
     lastRender();
   }
 
