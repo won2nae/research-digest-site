@@ -110,6 +110,21 @@ a{color:var(--accent)}
 .day-head{margin:0;font-size:13.5px;line-height:1.5;color:var(--ink);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.9em}
 .chip{align-self:flex-start;font-size:12px;font-weight:700;background:var(--surface-2);border-radius:999px;padding:3px 9px}
 
+/* 채팅 페이지 */
+.chat-log{display:flex;flex-direction:column;gap:12px;min-height:200px;margin:20px 0}
+.chat-bubble{max-width:85%;padding:10px 14px;border-radius:14px;font-size:14.5px;line-height:1.55}
+.chat-bubble.user{align-self:flex-end;background:var(--accent);color:#fff;border-bottom-right-radius:4px}
+.chat-bubble.assistant{align-self:flex-start;background:var(--surface);border:1px solid var(--border);border-bottom-left-radius:4px;box-shadow:var(--shadow)}
+.chat-bubble.assistant p{margin:0 0 8px}
+.chat-bubble.assistant p:last-child{margin-bottom:0}
+.chat-bubble.thinking{color:var(--ink-muted);font-style:italic}
+.chat-bubble.error{background:color-mix(in srgb, var(--up) 10%, var(--surface));border:1px solid var(--up);color:var(--up)}
+.chat-form{display:flex;gap:8px;position:sticky;bottom:12px}
+.chat-form input{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--ink);font-size:15px}
+.chat-form button{padding:12px 20px;border:none;border-radius:10px;background:var(--accent);color:#fff;font-weight:700;cursor:pointer}
+.chat-form button:disabled{opacity:.6;cursor:default}
+.chat-note{margin-top:10px}
+
 /* 일별 페이지 */
 .market-block{margin-bottom:6px}
 .market-block .chart-card{margin-top:12px}

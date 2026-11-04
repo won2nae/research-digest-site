@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>리서치 브리핑에 물어보기</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../">← 홈</a>
+  <header class="page-head">
+    <div class="eyebrow">데일리 리서치 브리핑</div>
+    <h1>브리핑에 물어보기</h1>
+    <p class="muted">과거 브리핑·기업 공시·재무정보를 근거로만 답해요. 투자 판단은 제시하지 않아요.</p>
+  </header>
+
+  <div id="chat-log" class="chat-log"></div>
+
+  <form id="chat-form" class="chat-form">
+    <input id="chat-input" type="text" placeholder="예: 삼성전자 최근 공시 요약해줘" autocomplete="off" maxlength="500">
+    <button id="chat-send" type="submit">보내기</button>
+  </form>
+  <p class="muted chat-note">하루 질문 수가 제한돼 있어요. AI 응답은 틀릴 수 있으니 원문 리포트로 교차확인하세요.</p>
+</div>
+<script src="../assets/marked.min.js"></script>
+<script src="../assets/chat.js"></script>
+</body>
+</html>

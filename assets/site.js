@@ -367,10 +367,16 @@
     return `
       <section class="block">
         <div class="block-head"><h2>Reports</h2></div>
-        <a class="reports-card" href="reports/">
-          <div class="reports-card-title">전체 리포트 보기</div>
-          <div class="reports-card-sub muted">${days.length}개 영업일${latest ? " · 최신 " + esc(latest.date) : ""}</div>
-        </a>
+        <div class="card-row">
+          <a class="reports-card" href="reports/">
+            <div class="reports-card-title">전체 리포트 보기</div>
+            <div class="reports-card-sub muted">${days.length}개 영업일${latest ? " · 최신 " + esc(latest.date) : ""}</div>
+          </a>
+          <a class="reports-card" href="chat/">
+            <div class="reports-card-title">브리핑에 물어보기</div>
+            <div class="reports-card-sub muted">과거 리포트·공시·재무정보 기반 질의응답</div>
+          </a>
+        </div>
       </section>`;
   }
 
