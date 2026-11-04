@@ -93,6 +93,8 @@ a{color:var(--accent)}
 .news-md strong{color:var(--ink)}
 
 /* Reports 카드 (홈 상단, 압축형) */
+.card-row{display:grid;grid-template-columns:1fr;gap:10px}
+@media (min-width:560px){.card-row{grid-template-columns:1fr 1fr}}
 .reports-card{display:block;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;text-decoration:none;color:var(--ink);box-shadow:var(--shadow);transition:border-color .15s, transform .15s}
 .reports-card:hover{border-color:var(--accent);transform:translateY(-1px)}
 .reports-card-title{font-size:16px;font-weight:700}
