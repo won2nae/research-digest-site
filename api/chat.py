@@ -19,7 +19,7 @@ import requests
 import anthropic
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
-DAILY_LIMIT = 20
+DAILY_LIMIT = 5
 MODEL = "claude-sonnet-5-5"
 
 SYSTEM_PROMPT = """너는 한국 증권사 리서치 리포트를 매일 수집·요약하는 '리서치 브리핑'
