@@ -435,7 +435,7 @@
             <div class="chart-box"><canvas id="idx-chart"></canvas></div>
           </div>
           <div class="chart-card">
-            <h3>금리 추이 <span class="muted">· % · 미국은 1985년부터, 한국은 집계 시작일부터</span></h3>
+            <h3>금리 추이 <span class="muted">· % · 한·독·일·영·미는 월별 장기 이력, 중국은 집계 시작일부터</span></h3>
             <div class="chart-box"><canvas id="rate-chart"></canvas></div>
           </div>
           <div class="chart-card">
