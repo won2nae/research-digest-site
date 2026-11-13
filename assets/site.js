@@ -19,6 +19,7 @@
     "DE10YT=RR": (v) => num(v, 3) + "%",
     "JP10YT=RR": (v) => num(v, 3) + "%",
     "GB10YT=RR": (v) => num(v, 3) + "%",
+    "CN10YT=RR": (v) => num(v, 3) + "%",
     ".DJI": (v) => num(v, 2),
     ".INX": (v) => num(v, 2),
     ".IXIC": (v) => num(v, 2),
