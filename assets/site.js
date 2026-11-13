@@ -19,17 +19,16 @@
     "DE10YT=RR": (v) => num(v, 3) + "%",
     "JP10YT=RR": (v) => num(v, 3) + "%",
     "GB10YT=RR": (v) => num(v, 3) + "%",
-    "CN10YT=RR": (v) => num(v, 3) + "%",
     ".DJI": (v) => num(v, 2),
     ".INX": (v) => num(v, 2),
     ".IXIC": (v) => num(v, 2),
   };
   const INDEX_CODES = ["KOSPI", "KOSDAQ", ".INX", ".IXIC", ".DJI"];
   const INDEX_LABELS = { KOSPI: "코스피", KOSDAQ: "코스닥", ".INX": "S&P 500", ".IXIC": "나스닥", ".DJI": "다우존스" };
-  const RATE_CODES = ["KR10YT=RR", "US10YT=RR", "DE10YT=RR", "JP10YT=RR", "GB10YT=RR", "CN10YT=RR"];
+  const RATE_CODES = ["KR10YT=RR", "US10YT=RR", "DE10YT=RR", "JP10YT=RR", "GB10YT=RR"];
   const RATE_LABELS = {
     "KR10YT=RR": "한국 10년", "US10YT=RR": "미국 10년", "DE10YT=RR": "독일 10년",
-    "JP10YT=RR": "일본 10년", "GB10YT=RR": "영국 10년", "CN10YT=RR": "중국 10년",
+    "JP10YT=RR": "일본 10년", "GB10YT=RR": "영국 10년",
   };
   const SERIES_COLORS = ["#0B6E63", "#D98C2B", "#5B7DB1", "#B5485D", "#7A8B99", "#4FA8D8"];
 
@@ -435,7 +434,7 @@
             <div class="chart-box"><canvas id="idx-chart"></canvas></div>
           </div>
           <div class="chart-card">
-            <h3>금리 추이 <span class="muted">· % · 한·독·일·영·미는 월별 장기 이력, 중국은 집계 시작일부터</span></h3>
+            <h3>금리 추이 <span class="muted">· % · 한·독·일·영·미는 월별 장기 이력</span></h3>
             <div class="chart-box"><canvas id="rate-chart"></canvas></div>
           </div>
           <div class="chart-card">
